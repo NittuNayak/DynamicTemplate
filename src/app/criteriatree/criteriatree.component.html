@@ -1,0 +1,19 @@
+<ul class="sidebar-menu" style="list-style: none">
+  <li class="treeview" *ngFor="let criteria of criteriaList; let i=index" style="list-style: none; margin-left:100px;">
+    <app-criteria (onFieldNameChange)=updateFieldName($event) (onOperatorChange)=updateOperatorName($event) (onRangeOperatorChange)=updateRangeOperatorName($event)
+      [criteria]="criteria"></app-criteria>
+
+    <div *ngIf="criteriaList?.length > 1" style="margin-left: 100px;margin-top: 2px;">
+      <button type="button" (click)="addNewCriteria()" class="btn btn-primary">Add criteria +</button>
+    </div>
+    <ul class="treeview-menu" style="list-style: none">
+      <li *ngFor="let childCriteria of criteria.nestedCriteria" style="list-style: none; margin-left:100px;">
+        <app-criteria (onFieldNameChange)=updateFieldName($event) (onOperatorChange)=updateOperatorName($event) (onRangeOperatorChange)=updateRangeOperatorName($event)
+          [criteria]="criteria"></app-criteria>
+        <div *ngIf="childCriteria.nestedCriteria.length > 0" class="treeview-menu">
+          <app-criteriatree [criteriaList]="childCriteria.nestedCriteria"></app-criteriatree>
+        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
